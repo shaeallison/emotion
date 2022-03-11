@@ -1,5 +1,6 @@
 import emotionReset from 'emotion-reset';
-import { css, Global} from '@emotion/react'
+import { css, Global, ThemeProvider} from '@emotion/react'
+import '../src/fonts/fonts.css'
 
 const globalStyles = (
   <Global
@@ -29,10 +30,23 @@ const globalStyles = (
   />
 )
 
+const theme = {
+  colors: {
+    primary: '#005776',
+    secondary: '#576F7D',
+    tertiary: '#004A64',
+    accent: '#51E6DF',
+    white: '#fff',
+    border: '#DBDBDB'
+  },
+}
+
 const App = ({ Component, pageProps }) => (
   <>
     {globalStyles}
-    <Component {...pageProps} />
+    <ThemeProvider theme={theme}>
+      <Component {...pageProps} />
+    </ThemeProvider>
   </>
 )
 

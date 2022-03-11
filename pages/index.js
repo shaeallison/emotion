@@ -1,63 +1,70 @@
-import { css, keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
+import {device} from '../src/utils'
+import {Grid, Column, Card} from '../src/shared'
 
-const basicStyles = css`
-  background-color: white;
-  color: cornflowerblue;
-  border: 1px solid lightgreen;
-  border-right: none;
-  border-bottom: none;
-  box-shadow: 5px 5px 0 0 lightgreen, 10px 10px 0 0 lightyellow;
-  transition: all 0.1s linear;
-  margin: 3rem 0;
-  padding: 1rem 0.5rem;
+const Wrapper = styled.div`
+  background: linear-gradient(315deg, #00B2A9 0%, #005776 100%);
+  padding-top: 1rem;
 `
 
-const hoverStyles = css`
-  &:hover {
-    color: white;
-    background-color: lightgray;
-    border-color: aqua;
-    box-shadow: -15px -15px 0 0 aqua, -30px -30px 0 0 cornflowerblue;
-  }
+const SidebarContent = styled.div`
+  background: ${({ theme }) => theme.colors.tertiary};
+  color: ${({ theme }) => theme.colors.white};
+  min-height: calc(100vh - 1rem);
+  height: 100%;
 `
-const bounce = keyframes`
-  from {
-    transform: scale(1.01);
-  }
-  to {
-    transform: scale(0.99);
+
+const MainContent = styled.div`
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.white};
+  min-height: calc(100vh - 1rem);
+  padding: 5rem 2rem;
+  height: 100%;
+
+  @media ${device.md} {
+    padding: 5rem;
   }
 `
 
-const Basic = styled.div`
-  ${basicStyles};
+const Title = styled.h1`
+  font-size: 4.4rem;
+  margin-bottom: 3rem;
 `
 
-const Combined = styled.div`
-  ${basicStyles};
-  ${hoverStyles};
-  & code {
-    background-color: linen;
-  }
-`
-const Animated = styled.div`
-  ${basicStyles};
-  ${hoverStyles};
-  & code {
-    background-color: linen;
-  }
-  animation: ${({ animation }) => animation} 0.2s infinite ease-in-out alternate;
-`
+const gutters = [
+  {breakpoint: null, size: '0'},
+]
 
-const Home = () => (
-  <div>
-    <Basic>Cool Styles</Basic>
-    <Combined>
-      With <code>:hover</code>.
-    </Combined>
-    <Animated animation={bounce}>Let's bounce.</Animated>
-  </div>
+const Layout = () => (
+  <Wrapper>
+    <Grid gutter={gutters}>
+      <Column
+        tag='sidebar'
+        gutter={gutters}
+        cols={[
+          {breakpoint: null, size: '12'},
+          {breakpoint: 'md', size: '3'},
+        ]}
+        key='sidebar-col'>
+          <SidebarContent>
+            Sidebar Content
+          </SidebarContent>
+      </Column>
+      <Column
+        tag='main'
+        gutter={gutters}
+        cols={[
+          {breakpoint: null, size: '12'},
+          {breakpoint: 'md', size: '9'},
+        ]}
+        key='main-col'>
+          <MainContent>
+            <Title>My Account</Title>
+            <Card/>
+          </MainContent>
+      </Column>
+    </Grid>
+  </Wrapper>
 )
 
-export default Home
+export default Layout
